@@ -21,7 +21,8 @@ The `main.py` script implements a domain-flexible, hybrid strategy for extractin
 - Outputs the results to a file named:
 
 ```plaintext
-output_concepts_<subject>.csv```
+output_concepts_<subject>.csv
+```
 
 
 
