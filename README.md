@@ -1,60 +1,44 @@
-# Intern Test Task Template: Question to Concept Mapping
+## Hybrid Concept Extraction Strategy in `main.py`
 
-This template is designed to make it easy to run and evaluate submissions for a question-to-concept mapping task using CSV data and the Anthropic LLM API.
+The `main.py` script implements a domain-flexible, hybrid strategy for extracting concepts from textual data. The process includes the following key components:
 
-## Folder Structure
+### 1. Capitalized Phrase Detection
+- Identifies multi-word proper noun sequences.
+- Example: `"Harappan Civilization"`, `"Mauryan Empire"`.
 
-```
-.
-├── main.py                 # Entry point, handles CLI and user code
-├── llm_api.py              # Handles Anthropic API calls, loads API key from .env
-├── csv_reader.py           # Reads CSV from resources/ and returns data
-├── resources/              # Folder containing subject CSVs (ancient_history.csv, math.csv, etc.)
-├── .env                    # Stores Anthropic API key
-├── requirements.txt        # Python dependencies
-├── Makefile                # Run commands
-└── README.md               # Instructions
-```
+### 2. Keyword-to-Concept Mapping
+- Utilizes a subject-specific dictionary to map known terms to canonical concept labels.
 
-## Setup Instructions
+### 3. Fallback Heuristic
+- If neither of the above methods returns a result:
+  - Selects up to **two of the longest words** in the question as placeholder concepts.
 
-1. **Clone the repository and navigate to the project folder.**
-2. **Install dependencies:**
-   ```
-   make install
-   ```
-3. **Add your Anthropic API key:** --> need not do
-   - Copy your API key into the `.env` file:
-     ```
-     ANTHROPIC_API_KEY=your_anthropic_api_key_here
-     ```
+### Execution Details
 
-## Usage
+- The script accepts a `--subject` argument.
+- Processes an input CSV file.
+- Prints the extracted concept mappings to the console in a specified format.
+- Outputs the results to a file named:
 
-Run the program with your desired subject:
+```plaintext
+output_concepts_<subject>.csv
 
-```
-make run SUBJECT=math
-```
-Or directly:
-```
-python main.py --subject=math
-```
 
-## Where to Write Your Code
 
-- Open `main.py`.
-- Find the section marked:
-  ```python
-  # --- PLACEHOLDER FOR USER CODE ---
-  # TODO: Implement your question-to-concept mapping logic here.
 
-  ```
-- Write your solution in this section.
 
-## Notes
-- The template uses `python-dotenv` to load environment variables.
-- The Anthropic API is accessed via the `anthropic` Python package.
----
 
-Feel free to reach out if you have any questions!
+
+I’ve provided two modular, LLM-ready files:
+
+llm_interface.py: A stub with get_concepts_via_llm(question, subject) ready for your real LLM calls.
+
+main.py :
+
+Separates keyword-based extraction into extract_concepts_keyword().
+
+Introduces a --use-llm flag; if set, it attempts an LLM call, falling back to keywords if unimplemented.
+
+Encapsulates processing into process_questions(), keeping I/O and extraction logic cleanly separated.
+
+This structure makes integrating any LLM (Anthropic, OpenAI, etc.) straightforward: just implement llm_interface.get_concepts_via_llm() and uncomment the import.
