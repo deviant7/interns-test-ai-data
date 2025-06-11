@@ -26,10 +26,7 @@ output_concepts_<subject>.csv
 
 
 
-
-
-
-I’ve provided two modular, LLM-ready files:
+### I’ve provided two modular, LLM-ready files:
 
 llm_interface.py: A stub with get_concepts_via_llm(question, subject) ready for your real LLM calls.
 
